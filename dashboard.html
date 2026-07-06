@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Console Dashboard — Aura Video Analyzer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Synced active segment style */
+    .active-segment {
+      background-color: var(--accent-light) !important;
+      border-left: 3px solid var(--accent-color) !important;
+    }
+  </style>
+</head>
+<body id="dashboard-page-container">
+
+  <!-- Sidebar & Main Content Grid -->
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="index.html" class="logo-link">
+        <span class="logo-dot"></span>
+        <span class="logo-text">aura<span>.video</span></span>
+      </a>
+      <ul class="sidebar-menu">
+        <li class="sidebar-menu-item active">
+          <a href="#">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="9"/>
+              <rect x="14" y="3" width="7" height="5"/>
+              <rect x="14" y="12" width="7" height="9"/>
+              <rect x="3" y="16" width="7" height="5"/>
+            </svg>
+            Workspace
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="features.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            Pipelines
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="workflows.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            Workflows
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a href="developers.html">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+            API & Keys
+          </a>
+        </li>
+      </ul>
+      <div style="margin-top:auto; font-size:12px; color:var(--text-secondary);">
+        Role: <span style="color:var(--text-primary); font-weight:600;">Developer</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-content">
+      
+      <!-- Top Title Bar -->
+      <div class="dashboard-header">
+        <div class="dashboard-title-group">
+          <h1>Analysis Console</h1>
+          <p>Launch processing pipelines and monitor real-time outputs.</p>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">Reset View</a>
+        </div>
+      </div>
+
+      <!-- State 1: Input Section -->
+      <section id="simulator-input-section" style="max-width: 800px; margin: 40px auto 0 auto; display: flex; flex-direction: column; gap: 32px;">
+        <div class="bento-card">
+          <div class="bento-card-header" style="text-align: center; margin-bottom: 32px;">
+            <h3 class="bento-card-title" style="font-size:24px;">Initialize Video Pipeline</h3>
+            <p class="bento-card-subtitle">Paste a video stream reference URL or upload a file directly to storage.</p>
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:24px; width:100%;">
+            <!-- URL Input -->
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="font-size: 13.5px; font-weight:600; color:var(--text-primary);">Video URL</label>
+              <div style="display:flex; gap:12px;">
+                <input type="text" id="dashboard-url-input" class="console-input" style="flex:1;" placeholder="https://www.youtube.com/watch?v=...">
+                <button id="dashboard-submit-url" class="btn btn-primary">Analyze Video</button>
+              </div>
+            </div>
+
+            <div style="text-align:center; color:var(--text-secondary); font-size:14px; position:relative; margin: 12px 0;">
+              <span style="background:var(--bg-card); padding:0 12px; position:relative; z-index:1;">OR</span>
+              <div style="position:absolute; top:50%; left:0; right:0; border-top:1px solid var(--border-color); z-index:0;"></div>
+            </div>
+
+            <!-- Upload Dropzone -->
+            <div class="dropzone" id="dashboard-drag-area">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <p style="font-weight:600; font-size:14.5px; color:var(--text-primary); margin-bottom:4px;">Drag and drop video presentation here</p>
+              <p style="font-size:12px; color:var(--text-secondary);">Uploads directly to object storage via signed URI</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- State 2: Active Pipeline Simulator Loading -->
+      <section id="simulator-active-section" class="simulator-active-layer">
+        <div class="simulator-spinner"></div>
+        <div class="simulator-headline" id="sim-stage-header">Running Analysis Pipeline</div>
+        <div class="simulator-subhead" id="sim-stage-sub">Ingesting video metadata...</div>
+        
+        <div class="progress-bar-container" style="max-width:400px; margin: 8px auto 20px auto;">
+          <div class="progress-bar-fill" id="sim-progress-fill"></div>
+        </div>
+
+        <div style="width:100%;">
+          <div style="font-size: 11px; text-transform:uppercase; font-weight:700; color:#64748b; text-align:left; margin-bottom:8px; letter-spacing:0.05em;">Worker Console Logs:</div>
+          <div class="terminal-container" id="sim-terminal">
+            <!-- Simulated logs print here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- State 3: Completed Bento Board -->
+      <section id="simulator-results-section" style="display:none; width:100%;">
+        <div class="dashboard-bento-grid">
+          
+          <!-- Card 1: Video Player (Col 8) -->
+          <div class="bento-card col-8" style="padding:20px;">
+            <div class="bento-video-player">
+              <!-- Using a high fidelity public video -->
+              <video id="bento-video" controls poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- Card 2: AI Summary Card (Col 4) -->
+          <div class="bento-card col-4">
+            <div class="bento-card-header">
+              <span class="feature-label">AI SUMMARY</span>
+              <h3 class="bento-card-title" style="font-size:20px; margin-top:4px;">Serverless queue architectures</h3>
+            </div>
+            <p style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:16px;">
+              Walkthrough explaining how to construct a robust background audio-processing consumer pipeline using FFmpeg, Turborepo schemas, and Groq/Gemini failover transcription models.
+            </p>
+            <div class="moment-tags">
+              <a class="moment-tag" data-time="0">#serverless</a>
+              <a class="moment-tag" data-time="30">#monorepo</a>
+              <a class="moment-tag" data-time="95">#gemini-failover</a>
+              <a class="moment-tag" data-time="172">#webhooks</a>
+            </div>
+          </div>
+
+          <!-- Card 3: Searchable Transcript (Col 4) -->
+          <div class="bento-card col-4">
+            <div class="bento-card-header" style="margin-bottom:16px;">
+              <span class="feature-label">TRANSCRIPT</span>
+              <h3 class="bento-card-title" style="font-size:16px; margin-top:2px;">Searchable index</h3>
+            </div>
+            <div class="transcript-search-box">
+              <svg class="transcript-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input type="text" id="transcript-search" class="transcript-search-input" placeholder="Search transcript...">
+            </div>
+            <div class="transcript-list" id="bento-transcript-list">
+              <!-- Transcript elements -->
+            </div>
+          </div>
+
+          <!-- Card 4: Step-by-Step Breakdown (Col 5) -->
+          <div class="bento-card col-5">
+            <div class="bento-card-header">
+              <span class="feature-label">PIPELINE WORKSTEPS</span>
+              <h3 class="bento-card-title" style="font-size:16px; margin-top:2px;">Extracted guidelines</h3>
+            </div>
+            <div class="step-list" id="bento-step-list" style="margin-top:16px;">
+              <!-- Extracted steps -->
+            </div>
+          </div>
+
+          <!-- Card 5: Remotion Highlights Preview (Col 3) -->
+          <div class="bento-card col-3">
+            <div class="bento-card-header">
+              <span class="feature-label">REMOTION HIGHLIGHT REEL</span>
+              <h3 class="bento-card-title" style="font-size:16px; margin-top:2px;">Render composition</h3>
+            </div>
+            <!-- Interactive mockup representer -->
+            <div style="margin-top:16px; background-color:#1e293b; aspect-ratio:4/3; border-radius:8px; overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center;">
+              <div style="text-align:center; color:#f8fafc; font-size:12px; padding:16px; z-index:2;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom:8px; display:inline-block;">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <div style="font-weight:600;">Play Recap Reel</div>
+                <div style="font-size:10px; color:#94a3b8; margin-top:2px;">Remotion client render active</div>
+              </div>
+              <div style="position:absolute; inset:0; background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%); z-index:1; opacity:0.85;"></div>
+            </div>
+            <a href="pricing.html" class="btn btn-secondary btn-sm" style="margin-top:auto; width:100%;">Export MP4 Video</a>
+          </div>
+
+          <!-- Card 6: Pipeline Logs & Uptime Failover (Col 12) -->
+          <div class="bento-card col-12">
+            <div class="bento-card-header">
+              <h3 class="bento-card-title">Relational debug stats</h3>
+              <p class="bento-card-subtitle">Performance breakdown details retrieved from current execution logs.</p>
+            </div>
+            <div class="stats-list" style="margin-top:24px;">
+              <div class="stat-item">
+                <div class="stat-val" style="color:#ef4444;">Gemini (Failover)</div>
+                <div class="stat-lbl">Active Provider</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val">12,450</div>
+                <div class="stat-lbl">Tokens Processed</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val">$0.0034</div>
+                <div class="stat-lbl">Simulated Cost</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-val">200 OK</div>
+                <div class="stat-lbl">Webhook status</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

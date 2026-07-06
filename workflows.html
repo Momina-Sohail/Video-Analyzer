@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflows — Automated Failsafes & Webhook Orchestration</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Custom flowchart node style matching Attio workflow charts */
+    .wf-node {
+      border: 1px solid var(--border-color);
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 16px;
+      width: 240px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      font-size: 13.5px;
+      position: relative;
+    }
+    .wf-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .wf-badge.trigger { background-color: #dbeafe; color: #1e40af; }
+    .wf-badge.action { background-color: #d1fae5; color: #065f46; }
+    .wf-badge.fallback { background-color: #fef3c7; color: #92400e; }
+    
+    .wf-connector {
+      width: 2px;
+      height: 40px;
+      background-color: var(--border-color);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-link">
+        <span class="logo-dot"></span>
+        <span class="logo-text">aura<span>.video</span></span>
+      </a>
+      <nav class="main-nav">
+        <div class="nav-dropdown">
+          <a href="features.html" class="nav-link">
+            Platform
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <div class="nav-dropdown-content">
+            <a href="features.html" class="dropdown-item">
+              <div class="dropdown-item-title">Core Pipeline</div>
+              <div class="dropdown-item-desc">MP4 audio extraction & transcription</div>
+            </a>
+            <a href="workflows.html" class="dropdown-item">
+              <div class="dropdown-item-title">Automations</div>
+              <div class="dropdown-item-desc">Fallback rules & queue workers</div>
+            </a>
+            <a href="data-model.html" class="dropdown-item">
+              <div class="dropdown-item-title">Universal Context</div>
+              <div class="dropdown-item-desc">Prisma & Postgres relational logs</div>
+            </a>
+          </div>
+        </div>
+        <a href="workflows.html" class="nav-link">Workflows</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="customers.html" class="nav-link">Customers</a>
+        <a href="developers.html" class="nav-link">Developers</a>
+      </nav>
+      <div class="header-ctas">
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">Sign in</a>
+        <a href="dashboard.html?start=true" class="btn btn-primary btn-sm">Start for free</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="section-hero">
+    <span class="feature-label">AUTOMATION ENGINE</span>
+    <h1 class="hero-title">Workflows that never stop.</h1>
+    <p class="hero-subtitle">
+      Automate transcription retries, failover from Groq to Gemini instantly, and notify client applications with cryptographically signed webhooks.
+    </p>
+  </section>
+
+  <!-- Flowchart Demonstration -->
+  <section class="section-container" style="padding-top:0;">
+    <div style="display:flex; justify-content:center; align-items:center; flex-direction:column; margin-bottom:80px;">
+      
+      <!-- Node 1 -->
+      <div class="wf-node">
+        <span class="wf-badge trigger">Trigger</span>
+        <div style="font-weight:600; color:var(--text-primary);">Video source registered</div>
+        <div style="color:var(--text-secondary); font-size:12px; margin-top:2px;">URL pasted or file uploaded</div>
+      </div>
+      
+      <div class="wf-connector"></div>
+      
+      <!-- Node 2 -->
+      <div class="wf-node">
+        <span class="wf-badge action">Action</span>
+        <div style="font-weight:600; color:var(--text-primary);">Groq Whisper dispatch</div>
+        <div style="color:var(--text-secondary); font-size:12px; margin-top:2px;">Transcribe audio segment</div>
+      </div>
+      
+      <div class="wf-connector" style="background-image: linear-gradient(to bottom, var(--border-color) 50%, transparent 50%); background-size: 2px 8px;"></div>
+      
+      <!-- Node 3 (Conditional Fallback) -->
+      <div class="wf-node" style="border-color:#fbbf24; background-color:#fffbeb;">
+        <span class="wf-badge fallback" style="background-color:#fef3c7; color:#b45309;">Fallback Condition</span>
+        <div style="font-weight:600; color:#92400e;">Groq API Exception</div>
+        <div style="color:#b45309; font-size:12px; margin-top:2px;">Rate limit (429) or timeout (504)</div>
+      </div>
+      
+      <div class="wf-connector"></div>
+      
+      <!-- Node 4 -->
+      <div class="wf-node">
+        <span class="wf-badge action">Action</span>
+        <div style="font-weight:600; color:var(--text-primary);">Gemini API engaged</div>
+        <div style="color:var(--text-secondary); font-size:12px; margin-top:2px;">Multimodal video/audio translation</div>
+      </div>
+
+      <div class="wf-connector"></div>
+      
+      <!-- Node 5 -->
+      <div class="wf-node">
+        <span class="wf-badge action">Webhook</span>
+        <div style="font-weight:600; color:var(--text-primary);">Signed payload sent</div>
+        <div style="color:var(--text-secondary); font-size:12px; margin-top:2px;">Notifies Next.js client layout</div>
+      </div>
+
+    </div>
+
+    <!-- Webhook details Bento -->
+    <div class="bento-grid">
+      <div class="bento-card col-8">
+        <div class="bento-card-header">
+          <h3 class="bento-card-title">Cryptographic webhook signatures</h3>
+          <p class="bento-card-subtitle">Ensure absolute trust between your custom background worker service and Next.js backend endpoint using SHA-256 header validation tokens.</p>
+        </div>
+        <div style="margin-top:24px; padding:20px; background-color:#0b0f19; border-radius:8px; font-family:monospace; font-size:12.5px; color:#e2e8f0; line-height:1.5;">
+          <div><span style="color:#64748b;">// Verify webhook headers in Next.js API</span></div>
+          <div>const signature = req.headers[<span style="color:#34d399;">'x-aura-signature'</span>];</div>
+          <div>const hash = crypto.createHmac(<span style="color:#34d399;">'sha256'</span>, process.env.WEBHOOK_SECRET)</div>
+          <div style="padding-left:16px;">.update(JSON.stringify(payload))</div>
+          <div style="padding-left:16px;">.digest(<span style="color:#34d399;">'hex'</span>);</div>
+          <div><span style="color:#f472b6;">if</span> (hash !== signature) {</div>
+          <div style="padding-left:16px; color:#ef4444;">return NextResponse.json({ error: 'Invalid token' }, { status: 401 });</div>
+          <div>}</div>
+        </div>
+      </div>
+      <div class="bento-card col-4">
+        <div class="bento-card-header">
+          <h3 class="bento-card-title">Reliability stats</h3>
+          <p class="bento-card-subtitle">Performance breakdown of fallback routes.</p>
+        </div>
+        <div style="margin-top:auto;">
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; border-bottom: 1px solid var(--border-color); padding: 8px 0;">
+            <span style="color:var(--text-secondary);">Direct Groq hit rate</span>
+            <span style="font-weight:600;">84.5%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; border-bottom: 1px solid var(--border-color); padding: 8px 0;">
+            <span style="color:var(--text-secondary);">Fallback engagement</span>
+            <span style="font-weight:600;">15.5%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; padding: 8px 0;">
+            <span style="color:var(--text-secondary);">Final transaction success</span>
+            <span style="font-weight:600; color:#10b981;">100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <span class="footer-logo-dot"></span>
+          <span>aura.video</span>
+        </a>
+        <p class="footer-copy">The next era of background video processing pipelines.</p>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Platform</h4>
+        <ul class="footer-links-list">
+          <li><a href="features.html" class="footer-link">Core Pipeline</a></li>
+          <li><a href="workflows.html" class="footer-link">Workflows</a></li>
+          <li><a href="data-model.html" class="footer-link">Data Model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Security</h4>
+        <ul class="footer-links-list">
+          <li><a href="security.html" class="footer-link">Overview</a></li>
+          <li><a href="security.html" class="footer-link">Uptime Logs</a></li>
+          <li><a href="security.html" class="footer-link">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Developers</h4>
+        <ul class="footer-links-list">
+          <li><a href="developers.html" class="footer-link">API Docs</a></li>
+          <li><a href="developers.html" class="footer-link">Webhooks</a></li>
+          <li><a href="pricing.html" class="footer-link">API Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Company</h4>
+        <ul class="footer-links-list">
+          <li><a href="customers.html" class="footer-link">Customers</a></li>
+          <li><a href="pricing.html" class="footer-link">Plans</a></li>
+          <li><a href="index.html" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Aura Ltd. All rights reserved.</span>
+      <div style="display:flex; gap:24px;">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

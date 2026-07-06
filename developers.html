@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developers — API Documentation & Webhook Configurations</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-link">
+        <span class="logo-dot"></span>
+        <span class="logo-text">aura<span>.video</span></span>
+      </a>
+      <nav class="main-nav">
+        <div class="nav-dropdown">
+          <a href="features.html" class="nav-link">
+            Platform
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <div class="nav-dropdown-content">
+            <a href="features.html" class="dropdown-item">
+              <div class="dropdown-item-title">Core Pipeline</div>
+              <div class="dropdown-item-desc">MP4 audio extraction & transcription</div>
+            </a>
+            <a href="workflows.html" class="dropdown-item">
+              <div class="dropdown-item-title">Automations</div>
+              <div class="dropdown-item-desc">Fallback rules & queue workers</div>
+            </a>
+            <a href="data-model.html" class="dropdown-item">
+              <div class="dropdown-item-title">Universal Context</div>
+              <div class="dropdown-item-desc">Prisma & Postgres relational logs</div>
+            </a>
+          </div>
+        </div>
+        <a href="workflows.html" class="nav-link">Workflows</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="customers.html" class="nav-link">Customers</a>
+        <a href="developers.html" class="nav-link">Developers</a>
+      </nav>
+      <div class="header-ctas">
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">Sign in</a>
+        <a href="dashboard.html?start=true" class="btn btn-primary btn-sm">Start for free</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="section-hero">
+    <span class="feature-label">DEVELOPER DOCUMENTATION</span>
+    <h1 class="hero-title">Integrate in minutes.</h1>
+    <p class="hero-subtitle">
+      Interact with Aura Video Analyzer via clean REST API request definitions or custom Javascript SDK libraries.
+    </p>
+  </section>
+
+  <!-- API Reference Content -->
+  <section class="section-container" style="padding-top:0;">
+    <div class="bento-grid">
+      <!-- Left side: API details -->
+      <div class="bento-card col-6">
+        <div class="bento-card-header">
+          <h3 class="bento-card-title">Create a processing job</h3>
+          <p class="bento-card-subtitle">POST /api/jobs</p>
+        </div>
+        <div style="margin-top:20px; font-size:14px; color:var(--text-secondary); display:flex; flex-direction:column; gap:16px;">
+          <p>Initialize a background pipeline execution. Provide a direct MP4 storage reference url or a public platform URL (e.g. YouTube).</p>
+          <div style="border-top:1px solid var(--border-color); padding-top:16px;">
+            <div style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">Request Headers:</div>
+            <div style="font-family:monospace; font-size:12.5px;">Authorization: Bearer AURA_SECRET_KEY</div>
+            <div style="font-family:monospace; font-size:12.5px; margin-top:2px;">Content-Type: application/json</div>
+          </div>
+          <div style="border-top:1px solid var(--border-color); padding-top:16px;">
+            <div style="font-weight:600; color:var(--text-primary); margin-bottom:4px;">Request Payload:</div>
+            <div style="font-family:monospace; font-size:12.5px; background:var(--accent-light); padding:10px; border-radius:6px; color:var(--text-primary);">
+              {<br>
+              &nbsp;&nbsp;"source_url": "https://youtube.com/watch?v=...",<br>
+              &nbsp;&nbsp;"webhook_url": "https://myapp.com/webhook"<br>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: Code block (Interactive switcher mockup) -->
+      <div class="bento-card col-6" style="padding:0;">
+        <div class="code-window" style="height:100%; border:none; border-radius:0;">
+          <div class="code-header">
+            <div class="code-dots">
+              <span class="code-dot-item"></span>
+              <span class="code-dot-item"></span>
+              <span class="code-dot-item"></span>
+            </div>
+            <div class="code-lang-tabs">
+              <span class="code-lang-tab active" id="tab-curl">cURL</span>
+              <span class="code-lang-tab" id="tab-js">Node.js</span>
+            </div>
+          </div>
+          <div class="code-body" id="code-curl-body">
+            <pre>
+curl -X POST https://api.aura.video/v1/jobs \
+  -H <span class="code-string">"Authorization: Bearer $AURA_API_KEY"</span> \
+  -H <span class="code-string">"Content-Type: application/json"</span> \
+  -d '{
+    <span class="code-keyword">"source_url"</span>: <span class="code-string">"https://youtube.com/watch?v=dQw"</span>,
+    <span class="code-keyword">"webhook_url"</span>: <span class="code-string">"https://my.app/api/webhook"</span>
+  }'
+            </pre>
+          </div>
+          <div class="code-body" id="code-js-body" style="display:none;">
+            <pre>
+<span class="code-keyword">const</span> fetch = require(<span class="code-string">'node-fetch'</span>);
+
+<span class="code-keyword">const</span> response = <span class="code-keyword">await</span> fetch(<span class="code-string">'https://api.aura.video/v1/jobs'</span>, {
+  method: <span class="code-string">'POST'</span>,
+  headers: {
+    <span class="code-string">'Authorization'</span>: <span class="code-string">'Bearer '</span> + process.env.AURA_KEY,
+    <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span>
+  },
+  body: JSON.stringify({
+    source_url: <span class="code-string">'https://youtube.com/watch?v=dQw'</span>,
+    webhook_url: <span class="code-string">'https://my.app/api/webhook'</span>
+  })
+});
+
+<span class="code-keyword">const</span> data = <span class="code-keyword">await</span> response.json();
+console.log(<span class="code-variable">data.job_id</span>);
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <span class="footer-logo-dot"></span>
+          <span>aura.video</span>
+        </a>
+        <p class="footer-copy">The next era of background video processing pipelines.</p>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Platform</h4>
+        <ul class="footer-links-list">
+          <li><a href="features.html" class="footer-link">Core Pipeline</a></li>
+          <li><a href="workflows.html" class="footer-link">Workflows</a></li>
+          <li><a href="data-model.html" class="footer-link">Data Model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Security</h4>
+        <ul class="footer-links-list">
+          <li><a href="security.html" class="footer-link">Overview</a></li>
+          <li><a href="security.html" class="footer-link">Uptime Logs</a></li>
+          <li><a href="security.html" class="footer-link">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Developers</h4>
+        <ul class="footer-links-list">
+          <li><a href="developers.html" class="footer-link">API Docs</a></li>
+          <li><a href="developers.html" class="footer-link">Webhooks</a></li>
+          <li><a href="pricing.html" class="footer-link">API Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Company</h4>
+        <ul class="footer-links-list">
+          <li><a href="customers.html" class="footer-link">Customers</a></li>
+          <li><a href="pricing.html" class="footer-link">Plans</a></li>
+          <li><a href="index.html" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Aura Ltd. All rights reserved.</span>
+      <div style="display:flex; gap:24px;">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tab toggle logic specific to code display
+    const tabCurl = document.getElementById("tab-curl");
+    const tabJs = document.getElementById("tab-js");
+    const bodyCurl = document.getElementById("code-curl-body");
+    const bodyJs = document.getElementById("code-js-body");
+
+    tabCurl.addEventListener("click", () => {
+      tabCurl.classList.add("active");
+      tabJs.classList.remove("active");
+      bodyCurl.style.display = "block";
+      bodyJs.style.display = "none";
+    });
+
+    tabJs.addEventListener("click", () => {
+      tabJs.classList.add("active");
+      tabCurl.classList.remove("active");
+      bodyJs.style.display = "block";
+      bodyCurl.style.display = "none";
+    });
+  </script>
+</body>
+</html>

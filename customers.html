@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customers — Developer Feedback & Aura Scaling Metrics</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+    @media (max-width: 768px) {
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .testimonial-card {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 40px;
+      background-color: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .testimonial-quote {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      background-color: #e4e7ec;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-link">
+        <span class="logo-dot"></span>
+        <span class="logo-text">aura<span>.video</span></span>
+      </a>
+      <nav class="main-nav">
+        <div class="nav-dropdown">
+          <a href="features.html" class="nav-link">
+            Platform
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <div class="nav-dropdown-content">
+            <a href="features.html" class="dropdown-item">
+              <div class="dropdown-item-title">Core Pipeline</div>
+              <div class="dropdown-item-desc">MP4 audio extraction & transcription</div>
+            </a>
+            <a href="workflows.html" class="dropdown-item">
+              <div class="dropdown-item-title">Automations</div>
+              <div class="dropdown-item-desc">Fallback rules & queue workers</div>
+            </a>
+            <a href="data-model.html" class="dropdown-item">
+              <div class="dropdown-item-title">Universal Context</div>
+              <div class="dropdown-item-desc">Prisma & Postgres relational logs</div>
+            </a>
+          </div>
+        </div>
+        <a href="workflows.html" class="nav-link">Workflows</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="customers.html" class="nav-link">Customers</a>
+        <a href="developers.html" class="nav-link">Developers</a>
+      </nav>
+      <div class="header-ctas">
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">Sign in</a>
+        <a href="dashboard.html?start=true" class="btn btn-primary btn-sm">Start for free</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="section-hero">
+    <span class="feature-label">DEVELOPER CASE STUDIES</span>
+    <h1 class="hero-title">The next era of video runs on Aura.</h1>
+    <p class="hero-subtitle">
+      See how developers, content platforms, and AI teams integrate our background pipeline to analyze millions of video minutes.
+    </p>
+  </section>
+
+  <!-- Metrics Grid -->
+  <section class="section-container" style="padding-top:0;">
+    <div class="bento-grid" style="margin-bottom: 80px;">
+      <div class="bento-card col-3">
+        <div class="stat-val" style="font-size:36px;">51,000,000</div>
+        <div class="stat-lbl" style="font-size:11px;">API calls per week</div>
+      </div>
+      <div class="bento-card col-3">
+        <div class="stat-val" style="font-size:36px;">100,000</div>
+        <div class="stat-lbl" style="font-size:11px;">MCP tool calls/month</div>
+      </div>
+      <div class="bento-card col-3">
+        <div class="stat-val" style="font-size:36px;">1,000+</div>
+        <div class="stat-lbl" style="font-size:11px;">Active worker nodes</div>
+      </div>
+      <div class="bento-card col-3">
+        <div class="stat-val" style="font-size:36px;">99.99%</div>
+        <div class="stat-lbl" style="font-size:11px;">Network uptime</div>
+      </div>
+    </div>
+
+    <!-- Testimonials Grid -->
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">
+          "Aura is a dev company's dream platform. It is the perfect engine to ingest our internal video training, extract the core transcripts, and auto-generate structured tutorials instantly."
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DB</div>
+          <div>
+            <div style="font-weight:600; font-size:14.5px; color:var(--text-primary);">David Banys</div>
+            <div style="font-size:12.5px; color:var(--text-secondary);">Head of Product, Railway.app</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-quote">
+          "The failover configuration is brilliant. Our translation workflows used to crash when rate limits were hit. With Aura's automatic Gemini redirection, our pipeline runs 24/7 without issues."
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MS</div>
+          <div>
+            <div style="font-weight:600; font-size:14.5px; color:var(--text-primary);">Momina Sohail</div>
+            <div style="font-size:12.5px; color:var(--text-secondary);">Lead Developer, ColdEmail-Automation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <span class="footer-logo-dot"></span>
+          <span>aura.video</span>
+        </a>
+        <p class="footer-copy">The next era of background video processing pipelines.</p>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Platform</h4>
+        <ul class="footer-links-list">
+          <li><a href="features.html" class="footer-link">Core Pipeline</a></li>
+          <li><a href="workflows.html" class="footer-link">Workflows</a></li>
+          <li><a href="data-model.html" class="footer-link">Data Model</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Security</h4>
+        <ul class="footer-links-list">
+          <li><a href="security.html" class="footer-link">Overview</a></li>
+          <li><a href="security.html" class="footer-link">Uptime Logs</a></li>
+          <li><a href="security.html" class="footer-link">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Developers</h4>
+        <ul class="footer-links-list">
+          <li><a href="developers.html" class="footer-link">API Docs</a></li>
+          <li><a href="developers.html" class="footer-link">Webhooks</a></li>
+          <li><a href="pricing.html" class="footer-link">API Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Company</h4>
+        <ul class="footer-links-list">
+          <li><a href="customers.html" class="footer-link">Customers</a></li>
+          <li><a href="pricing.html" class="footer-link">Plans</a></li>
+          <li><a href="index.html" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Aura Ltd. All rights reserved.</span>
+      <div style="display:flex; gap:24px;">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
